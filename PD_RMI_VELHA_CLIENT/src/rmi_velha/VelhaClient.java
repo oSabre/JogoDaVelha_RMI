@@ -20,6 +20,7 @@ public class VelhaClient extends UnicastRemoteObject implements VelhaClientInter
 			}
 			System.out.println();
 		}
+		System.out.println();
 	}
 
 	@Override
