@@ -11,7 +11,7 @@ public class VelhaClient extends UnicastRemoteObject implements VelhaClientInter
 	}
 
 	@Override
-	public void PrintBoard() throws RemoteException {
+	public void PrintBoard(int[][] board) throws RemoteException {
 		// TODO Auto-generated method stub
 		
 	}

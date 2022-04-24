@@ -31,8 +31,19 @@ public class VelhaServer extends UnicastRemoteObject implements VelhaServerInter
 					System.out.println("Essa é a jogada: " + i);
 					if(i%2 == 0) { // Jogador 1
 						
+						try {
+							clients.get(i).PrintBoard(board);
+						} catch (RemoteException e) {
+							e.printStackTrace();
+						}
 					}else { // Jogador 2
 						
+						try {
+							clients.get(i).PrintBoard(board);
+						} catch (RemoteException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
 					}
 				}
 			}
