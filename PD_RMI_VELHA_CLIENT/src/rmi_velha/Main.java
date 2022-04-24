@@ -14,7 +14,7 @@ public class Main {
 
 		VelhaClientInterface client = new VelhaClient();
 		
-		//server.registerClient(client);
+		server.RegisterClient(client);
 	}
 
 }

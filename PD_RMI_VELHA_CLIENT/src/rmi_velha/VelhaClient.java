@@ -14,7 +14,12 @@ public class VelhaClient extends UnicastRemoteObject implements VelhaClientInter
 	@Override
 	public void PrintBoard(int[][] board) throws RemoteException {
 		tab = board;
-		
+		for(int i = 0; i < 3; i++) {
+			for(int j = 0; j < 3; j++) {
+				System.out.print(tab[i][j]);
+			}
+			System.out.println();
+		}
 	}
 
 	@Override

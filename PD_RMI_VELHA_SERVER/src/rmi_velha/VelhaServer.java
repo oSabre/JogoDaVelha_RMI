@@ -12,7 +12,7 @@ public class VelhaServer extends UnicastRemoteObject implements VelhaServerInter
 	
 	protected VelhaServer() throws RemoteException {
 		super();
-		RodarJogo();
+		new RodarJogo().start();
 	}
 
 	@Override
@@ -23,26 +23,28 @@ public class VelhaServer extends UnicastRemoteObject implements VelhaServerInter
 		}
 	}
 
-	private void RodarJogo() {
-		for(;;) {
-			if(clients.size()==2) {
-				InicializaBoard();
-				for(int i = 0; i < 9; i++) {
-					System.out.println("Essa é a jogada: " + i);
-					if(i%2 == 0) { // Jogador 1
-						
-						try {
-							clients.get(i).PrintBoard(board);
-						} catch (RemoteException e) {
-							e.printStackTrace();
-						}
-					}else { // Jogador 2
-						
-						try {
-							clients.get(i).PrintBoard(board);
-						} catch (RemoteException e) {
-							// TODO Auto-generated catch block
-							e.printStackTrace();
+	private class RodarJogo extends Thread {
+		public void run() {
+			for(;;) {
+				if(clients.size()==2) {
+					InicializaBoard();
+					for(int i = 0; i < 9; i++) {
+						System.out.println("Essa é a jogada: " + i);
+						if(i%2 == 0) { // Jogador 1
+							
+							try {
+								clients.get(i).PrintBoard(board);
+							} catch (RemoteException e) {
+								e.printStackTrace();
+							}
+						}else { // Jogador 2
+							
+							try {
+								clients.get(i).PrintBoard(board);
+							} catch (RemoteException e) {
+								// TODO Auto-generated catch block
+								e.printStackTrace();
+							}
 						}
 					}
 				}
