@@ -9,6 +9,7 @@ public class VelhaServer extends UnicastRemoteObject implements VelhaServerInter
 	
 	private volatile List<VelhaClientInterface> clients = new ArrayList<VelhaClientInterface>();
 	volatile int board[][] = new int[3][3];
+	public VelhaServerInterface isso = (VelhaServerInterface) this;
 	
 	protected VelhaServer() throws RemoteException {
 		super();
@@ -33,14 +34,14 @@ public class VelhaServer extends UnicastRemoteObject implements VelhaServerInter
 						if(i%2 == 0) { // Jogador 1
 							
 							try {
-								clients.get(0).PrintBoard(board);
+								clients.get(0).PrintBoard(board, 1, isso);
 							} catch (RemoteException e) {
 								e.printStackTrace();
 							}
 						}else { // Jogador 2
 							
 							try {
-								clients.get(1).PrintBoard(board);
+								clients.get(1).PrintBoard(board, 2, isso);
 							} catch (RemoteException e) {
 								// TODO Auto-generated catch block
 								e.printStackTrace();
@@ -59,6 +60,10 @@ public class VelhaServer extends UnicastRemoteObject implements VelhaServerInter
 				board[i][j] = 0;
 			}
 		}
+	}
+	
+	public void SetBoard(int[][] tab) {
+		board = tab;
 	}
 	
 }
