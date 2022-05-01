@@ -10,9 +10,12 @@ public class VelhaServer extends UnicastRemoteObject implements VelhaServerInter
 	private volatile List<VelhaClientInterface> clients = new ArrayList<VelhaClientInterface>();
 	volatile int board[][] = new int[3][3];
 	public VelhaServerInterface isso = (VelhaServerInterface) this;
+	private boolean Winner[] = new boolean[2];
 	
 	protected VelhaServer() throws RemoteException {
 		super();
+		Winner[0] = false;
+		Winner[1] = false;
 		new RodarJogo().start();
 	}
 
@@ -29,7 +32,7 @@ public class VelhaServer extends UnicastRemoteObject implements VelhaServerInter
 			for(;;) {
 				if(clients.size()==2) {
 					InicializaBoard();
-					for(int i = 0; i < 9; i++) {
+					for(int i = 0; i < 9; i++) { // i < 9 garante que não vai ter mais jogadas que o necessário.
 						System.out.println("Essa é a jogada: " + (i+1));
 						if(i%2 == 0) { // Jogador 1
 							
@@ -38,14 +41,49 @@ public class VelhaServer extends UnicastRemoteObject implements VelhaServerInter
 							} catch (RemoteException e) {
 								e.printStackTrace();
 							}
-						}else { // Jogador 2
 							
+							if(Winner[0]) {
+								// Printa nos clients quem ganhou.
+								try {
+									clients.get(0).PrintWin(1);
+								} catch (RemoteException e) {
+									// TODO Auto-generated catch block
+									e.printStackTrace();
+								}
+								
+								try {
+									clients.get(1).PrintWin(1);
+								} catch (RemoteException e) {
+									// TODO Auto-generated catch block
+									e.printStackTrace();
+								}
+								
+								break;
+							}
+							
+						}else { // Jogador 2
 							try {
 								clients.get(1).PrintBoard(board, 2, isso);
 							} catch (RemoteException e) {
-								// TODO Auto-generated catch block
 								e.printStackTrace();
 							}
+							
+							if(Winner[1]) {
+								// Printa nos clients quem ganhou.
+								try {
+									clients.get(0).PrintWin(2);
+								} catch (RemoteException e) {
+									e.printStackTrace();
+								}
+								
+								try {
+									clients.get(1).PrintWin(2);
+								} catch (RemoteException e) {
+									e.printStackTrace();
+								}
+								break;
+							}
+							
 						}
 					}
 					break;
@@ -54,6 +92,7 @@ public class VelhaServer extends UnicastRemoteObject implements VelhaServerInter
 		}
 	}
 	
+	// Inicializa o tabuleiro
 	private void InicializaBoard() {
 		for(int i = 0; i < 3; i++) {
 			for(int j = 0; j < 3; j++) {
@@ -61,9 +100,13 @@ public class VelhaServer extends UnicastRemoteObject implements VelhaServerInter
 			}
 		}
 	}
-	
+	// Atualiza o tabuleiro
 	public void SetBoard(int[][] tab) {
 		board = tab;
+	}
+	// Seta o ganhador.
+	public void SetWinner(int jogador) {
+		Winner[jogador - 1] = true;
 	}
 	
 }

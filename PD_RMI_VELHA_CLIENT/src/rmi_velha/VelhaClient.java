@@ -34,6 +34,15 @@ public class VelhaClient extends UnicastRemoteObject implements VelhaClientInter
 		System.out.println("Selecione uma coluna 0 1 2");
 		int coluna = keyboard.nextInt();
 		tab[linha][coluna] = jogador;
+		keyboard.close();
+		
+		
+	}
+
+	@Override
+	public void PrintWin(int jogador) throws RemoteException {
+		System.out.println("O jogador nº" + jogador +" venceu!");
+		
 	}
 
 }
