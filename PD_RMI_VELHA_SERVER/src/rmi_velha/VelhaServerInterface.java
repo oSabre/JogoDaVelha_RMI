@@ -7,6 +7,7 @@ public interface VelhaServerInterface extends Remote{
 	
 	public void RegisterClient(VelhaClientInterface client) throws RemoteException;
 	public void SetBoard(int [][] board) throws RemoteException;
+	public void SetWinner(int jogador) throws RemoteException;
 	/*
 	 * Precisa de uma maneira de:
 	 * -> Salvar as jogadas e passar para o outro jogador
